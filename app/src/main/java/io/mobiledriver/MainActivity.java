@@ -1,5 +1,7 @@
 package io.mobiledriver;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -111,8 +113,27 @@ public class MainActivity extends ActionBarActivity {
         protected void onPostExecute(String result)
         {
             Log.i("Post: ", result);
-            startActivity(new Intent(MainActivity.this, MainMenu.class));
-            finish();
+            if(result.startsWith("ERROR"))
+            {
+                Log.i("Logowanie:", "ERROR");
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Login error");
+                builder.setMessage("Bad credentials");
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+
+                    };
+                });
+                builder.show();
+            }
+            else
+            {
+                Log.i("Logowanie:", "OK");
+                startActivity(new Intent(MainActivity.this, MainMenu.class));
+                finish();
+            }
+
         }
 
     }
