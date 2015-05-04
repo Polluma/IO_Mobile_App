@@ -48,7 +48,8 @@
         android:layout_height="40dp"
         android:layout_below="@id/register_userNameText"
         android:layout_toRightOf="@id/register_passwordText"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:password="true"/>
 
     <TextView
         android:id="@+id/register_emailText"
@@ -83,7 +84,8 @@
             android:layout_below="@id/register_emailText"
             android:layout_centerHorizontal="true"
             android:layout_gravity="bottom"
-            android:text="Register"/>
+            android:text="Register"
+            android:onClick="register_user"/>
 
         <Button
             android:id="@+id/register_back"

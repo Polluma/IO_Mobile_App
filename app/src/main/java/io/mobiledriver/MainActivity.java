@@ -1,11 +1,13 @@
 package io.mobiledriver;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,6 +85,10 @@ public class MainActivity extends ActionBarActivity {
             EditText eLogin = (EditText)findViewById(R.id.login);
             EditText ePassword = (EditText)findViewById(R.id.password);
             Log.i("Testowanie logowania", eLogin.getText().toString() + " " +ePassword.getText().toString());
+
+            TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+            Log.i("Device ID: ", tm.getDeviceId());
+
 
             String url = params[0];
 

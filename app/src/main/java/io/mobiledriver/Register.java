@@ -1,11 +1,30 @@
 package io.mobiledriver;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Register extends ActionBarActivity {
@@ -42,5 +61,78 @@ public class Register extends ActionBarActivity {
     public void goBack(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    public void register_user(View view)
+    {
+        new registerTask().execute("http://thebilet.usetitan.com/web.ashx/register");
+    }
+
+    protected class registerTask extends AsyncTask<String, Void, String>
+    {
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.i("Registering", "debug");
+            String userName = ((EditText)findViewById(R.id.register_firstName)).getText().toString();
+            String password = ((EditText)findViewById(R.id.register_password)).getText().toString();
+            String email = ((EditText)findViewById(R.id.register_email)).getText().toString();
+            Log.i("Values", userName + " " + password + " " + email);
+
+            String url = params[0];
+
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(url);
+
+            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+            urlParameters.add(new BasicNameValuePair("username", userName));
+            urlParameters.add(new BasicNameValuePair("password", password));
+            urlParameters.add(new BasicNameValuePair("email", email));
+
+
+            try
+            {
+                post.setEntity(new UrlEncodedFormEntity(urlParameters));
+                HttpResponse response = client.execute(post);
+                //Log.i("Response Value:", EntityUtils.toString(response.getEntity()));
+                return EntityUtils.toString(response.getEntity());
+
+
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            return "Error";
+
+        }
+
+        protected void onPostExecute(String result)
+        {
+            Log.i("Post: ", result);
+            if(result.startsWith("ERROR"))
+            {
+                Log.i("Rejestrowanie:", "ERROR");
+                AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                builder.setTitle("Register error");
+                builder.setMessage("Blah blah");
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+
+                    };
+                });
+                builder.show();
+            }
+            else
+            {
+                Log.i("Register:", "OK");
+                startActivity(new Intent(Register.this, MainActivity.class));
+                finish();
+            }
+
+        }
     }
 }
+

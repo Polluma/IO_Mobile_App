@@ -48,7 +48,8 @@
         android:layout_height="40dp"
         android:layout_below="@id/login"
         android:layout_toRightOf="@id/passwordText"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:password="true"/>
 
     <LinearLayout
         android:id="@+id/buttonLayout"

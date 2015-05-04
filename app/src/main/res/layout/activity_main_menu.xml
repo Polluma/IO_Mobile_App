@@ -8,12 +8,43 @@
     android:background="@drawable/background">
 
     <TextView
-        android:id="@+id/logo"
+        android:id="@+id/register_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Main menu"
         android:textSize="60sp"
         android:textColor="#ff0080"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_mainLayout"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/buyTicketButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "Buy ticket"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:width="200dp"
+            android:height="60dp"/>
+
+        <Button
+            android:id="@+id/chechTicketsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "Check active tickets"
+            android:layout_below="@id/buyTicketButton"
+            android:layout_centerHorizontal="true"
+            android:width="200dp"
+            android:height="60dp"/>
+
+        </LinearLayout>
+
 
 </RelativeLayout>
