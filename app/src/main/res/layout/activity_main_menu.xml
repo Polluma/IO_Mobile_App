@@ -32,7 +32,8 @@
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:width="200dp"
-            android:height="60dp"/>
+            android:height="60dp"
+            android:onClick="buyticket"/>
 
         <Button
             android:id="@+id/chechTicketsButton"
