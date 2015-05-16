@@ -91,7 +91,7 @@
         android:id="@+id/buttonLayout"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_below="@id/area"
+        android:layout_below="@id/areaText"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true">
 
