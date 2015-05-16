@@ -17,7 +17,7 @@ public class ActiveTicketsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_tickets);
-
+//array
         array_spinner=new String[5];
         array_spinner[0]="option 1";
         array_spinner[1]="option 2";
