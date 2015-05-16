@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,7 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -22,6 +25,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +38,26 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences prefs = this.getSharedPreferences("com.sharedPreferences", Context.MODE_PRIVATE);
+        String key = "Token";
+        String l = prefs.getString(key, "0");
+        Log.i("Preference: ", l);
+        if(l == "0")
+        {
+            Log.i("Logging: ", "Loging required");
+            //TODO
+            /*
+                Add async task to login
+                Save token onPostExecute
+             */
+        }
+        else
+        {
+            Log.i("Logging: ", "Logging not required, remebered values");
+            Intent intent = new Intent(this, MainMenu.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
@@ -69,6 +93,29 @@ public class MainActivity extends ActionBarActivity {
 
     public void onLogin(View view) throws IOException {
         new loginTask().execute("http://thebilet.usetitan.com/web.ashx/login");
+    }
+
+    public void forgotPassword(View view)
+    {
+        TextView forgotLoginView = (TextView)findViewById(R.id.main_forgotLogin);
+        forgotLoginView.setVisibility(View.VISIBLE);
+        TextView forgotEmailView = (TextView)findViewById(R.id.main_forgotEmail);
+        forgotEmailView.setVisibility(View.VISIBLE);
+        EditText forgotLoginEntry = (EditText)findViewById(R.id.main_forgotLoginEntry);
+        forgotLoginEntry.setVisibility(View.VISIBLE);
+        EditText forgotEmailEntry = (EditText)findViewById(R.id.main_forgotEmailEntry);
+        forgotEmailEntry.setVisibility(View.VISIBLE);
+        Button sendEmailButton = (Button)findViewById(R.id.main_sendMailButton);
+        sendEmailButton.setVisibility(View.VISIBLE);
+    }
+
+    public void sendEmail(View view)
+    {
+        EditText forgotLoginEntry = (EditText)findViewById(R.id.main_forgotLoginEntry);
+        EditText forgotEmailEntry = (EditText)findViewById(R.id.main_forgotEmailEntry);
+        String login = forgotLoginEntry.getText().toString();
+        String email = forgotEmailEntry.getText().toString();
+        Log.i("Credentials: ", login + " " + email);
     }
 
     private class loginTask extends AsyncTask<String, Void, String>
