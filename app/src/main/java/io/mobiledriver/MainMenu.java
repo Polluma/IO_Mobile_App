@@ -39,9 +39,8 @@ public class MainMenu extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void register(View view)
+    public void buyticket(View view)
     {
-        //Button registerButton = (Button)findViewById(R.id.registerButton);
         Intent intent = new Intent(this, BuyTicketActivity.class);
         startActivity(intent);
 
