@@ -33,6 +33,8 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+    private boolean stayHidden = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,15 +99,30 @@ public class MainActivity extends ActionBarActivity {
     public void forgotPassword(View view)
     {
         TextView forgotLoginView = (TextView)findViewById(R.id.main_forgotLogin);
-        forgotLoginView.setVisibility(View.VISIBLE);
         TextView forgotEmailView = (TextView)findViewById(R.id.main_forgotEmail);
-        forgotEmailView.setVisibility(View.VISIBLE);
         EditText forgotLoginEntry = (EditText)findViewById(R.id.main_forgotLoginEntry);
-        forgotLoginEntry.setVisibility(View.VISIBLE);
         EditText forgotEmailEntry = (EditText)findViewById(R.id.main_forgotEmailEntry);
-        forgotEmailEntry.setVisibility(View.VISIBLE);
         Button sendEmailButton = (Button)findViewById(R.id.main_sendMailButton);
-        sendEmailButton.setVisibility(View.VISIBLE);
+
+
+        if(stayHidden)
+        {
+            forgotLoginView.setVisibility(View.VISIBLE);
+            forgotEmailView.setVisibility(View.VISIBLE);
+            forgotLoginEntry.setVisibility(View.VISIBLE);
+            forgotEmailEntry.setVisibility(View.VISIBLE);
+            sendEmailButton.setVisibility(View.VISIBLE);
+            stayHidden = false;
+        }
+        else
+        {
+            forgotLoginView.setVisibility(View.INVISIBLE);
+            forgotEmailView.setVisibility(View.INVISIBLE);
+            forgotLoginEntry.setVisibility(View.INVISIBLE);
+            forgotEmailEntry.setVisibility(View.INVISIBLE);
+            sendEmailButton.setVisibility(View.INVISIBLE);
+            stayHidden = true;
+        }
     }
 
     public void sendEmail(View view)
