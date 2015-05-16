@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +25,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         else
         {
             Log.i("Logging: ", "Logging not required, remebered values");
-            Intent intent = new Intent(this, MainMenu.class);
+            Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
             finish();
         }
