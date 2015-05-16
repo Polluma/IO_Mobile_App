@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class MainMenu extends ActionBarActivity {
+public class MainMenuActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,13 @@ public class MainMenu extends ActionBarActivity {
     public void buyticket(View view)
     {
         Intent intent = new Intent(this, BuyTicketActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void activetickets(View view)
+    {
+        Intent intent = new Intent(this, ActiveTicketsActivity.class);
         startActivity(intent);
 
     }

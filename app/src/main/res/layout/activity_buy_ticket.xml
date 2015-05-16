@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:text="Buy Ticket"
         android:textSize="40sp"
-        android:textColor="#000000"/>
+        android:textColor="#ff0080"/>
 
     <TextView
         android:id="@+id/licenseplateText"
