@@ -39,7 +39,7 @@ public class BuyTicketActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void goBack(View view){
+    public void onBack(View view){
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
         finish();
