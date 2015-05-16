@@ -8,19 +8,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class MainMenu extends ActionBarActivity {
+public class BuyTicketActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_buy_ticket);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_buy_ticket, menu);
         return true;
     }
 
@@ -39,11 +39,9 @@ public class MainMenu extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void register(View view)
-    {
-        //Button registerButton = (Button)findViewById(R.id.registerButton);
-        Intent intent = new Intent(this, BuyTicketActivity.class);
+    public void goBack(View view){
+        Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
-
+        finish();
     }
 }

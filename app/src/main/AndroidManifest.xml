@@ -27,6 +27,10 @@
             android:name=".MainMenu"
             android:label="@string/title_activity_main_menu" >
         </activity>
+        <activity
+            android:name=".BuyTicketActivity"
+            android:label="@string/title_activity_buy_ticket" >
+        </activity>
     </application>
 
 </manifest>
