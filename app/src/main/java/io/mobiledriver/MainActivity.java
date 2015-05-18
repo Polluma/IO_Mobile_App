@@ -193,6 +193,11 @@ public class MainActivity extends ActionBarActivity {
             else
             {
                 Log.i("Logowanie:", "OK");
+                SharedPreferences sharedPref = getSharedPreferences("com.sharedPreferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = sharedPref.edit();
+                edit.clear();
+                edit.putString("Token", result);
+                edit.commit();
                 startActivity(new Intent(MainActivity.this, MainMenuActivity.class));
                 finish();
             }

@@ -103,7 +103,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="bottom"
             android:text="BUY"
-            android:onClick="buy"/>
+            android:onClick="onBuy"/>
 
         <Button
             android:id="@+id/buyticket_back"
