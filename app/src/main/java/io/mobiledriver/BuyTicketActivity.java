@@ -1,8 +1,11 @@
 package io.mobiledriver;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,4 +47,13 @@ public class BuyTicketActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onBuy(View view)
+    {
+        SharedPreferences tokenDetail = getSharedPreferences("com.sharedPreferences", Context.MODE_PRIVATE);
+        String token = tokenDetail.getString("Token", null);
+        Log.i("Shared preferences: ", token);
+    }
+
+
 }
