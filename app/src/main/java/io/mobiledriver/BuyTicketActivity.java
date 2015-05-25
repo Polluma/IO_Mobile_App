@@ -3,12 +3,28 @@ package io.mobiledriver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BuyTicketActivity extends ActionBarActivity {
@@ -53,6 +69,26 @@ public class BuyTicketActivity extends ActionBarActivity {
         SharedPreferences tokenDetail = getSharedPreferences("com.sharedPreferences", Context.MODE_PRIVATE);
         String token = tokenDetail.getString("Token", null);
         Log.i("Shared preferences: ", token);
+    }
+
+    private class buyingTask extends AsyncTask<String, Void, String>
+    {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String string_url = params[0];
+            String token = params[1];
+
+            try
+            {
+
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            return "ERROR";
+        }
     }
 
 

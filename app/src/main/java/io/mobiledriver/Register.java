@@ -17,11 +17,20 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +75,7 @@ public class Register extends ActionBarActivity {
 
     public void register_user(View view)
     {
-        new registerTask().execute("http://thebilet.usetitan.com/web.ashx/register");
+        new registerTask().execute("https://thebilet.usetitan.com/web.ashx/register");
     }
 
     protected class registerTask extends AsyncTask<String, Void, String>
@@ -79,31 +88,34 @@ public class Register extends ActionBarActivity {
             String password = ((EditText)findViewById(R.id.register_password)).getText().toString();
             String email = ((EditText)findViewById(R.id.register_email)).getText().toString();
             Log.i("Values", userName + " " + password + " " + email);
-
-            String url = params[0];
-
-            HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(url);
-
-            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-            urlParameters.add(new BasicNameValuePair("username", userName));
-            urlParameters.add(new BasicNameValuePair("password", password));
-            urlParameters.add(new BasicNameValuePair("email", email));
-
-
-            try
-            {
-                post.setEntity(new UrlEncodedFormEntity(urlParameters));
-                HttpResponse response = client.execute(post);
-                //Log.i("Response Value:", EntityUtils.toString(response.getEntity()));
-                return EntityUtils.toString(response.getEntity());
-
-
-            }
-            catch(Exception e)
-            {
+            String string_url = params[0];
+            try {
+                List<NameValuePair> qparams = new ArrayList<NameValuePair>();
+                qparams.add(new BasicNameValuePair("userName", userName));
+                qparams.add(new BasicNameValuePair("password", password));
+                qparams.add(new BasicNameValuePair("email", email));
+                URI uri = URIUtils.createURI("https", "thebilet.usetitan.com", -1,
+                        "/web.ashx/register", URLEncodedUtils.format(qparams, "UTF-8"), null);
+                Log.i("Url to send: ", string_url);
+                //URL url = new URL(string_url);
+                HttpURLConnection con = (HttpURLConnection)uri.toURL().openConnection();
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String input;
+                String result = "";
+                while((input = br.readLine()) != null)
+                {
+                    result += input;
+                }
+                Log.i("HTTPs result: ", result);
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
+
             return "Error";
 
         }

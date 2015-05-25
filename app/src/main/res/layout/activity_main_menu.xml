@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:text="Main menu"
         android:textSize="60sp"
-        android:textColor="#ff0080"/>
+        android:textColor="#006600"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,6 +45,15 @@
             android:width="200dp"
             android:height="60dp"
             android:onClick="activetickets"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="200dp"
+            android:height="60dp"
+            android:text="Logout"
+            android:layout_gravity="bottom"
+            android:onClick="logout"/>
 
         </LinearLayout>
 

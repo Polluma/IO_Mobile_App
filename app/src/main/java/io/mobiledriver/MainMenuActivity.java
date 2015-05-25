@@ -52,4 +52,11 @@ public class MainMenuActivity extends ActionBarActivity {
         startActivity(intent);
 
     }
+
+    public void logout(View view)
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

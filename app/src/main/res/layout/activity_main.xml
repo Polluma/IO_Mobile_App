@@ -20,7 +20,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="TheBileT"
                 android:textSize="60sp"
-                android:textColor="#ff0080"/>
+                android:textColor="#006600"/>
 
             <TextView
                 android:id="@+id/loginText"
@@ -138,7 +138,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/main_forgotLoginEntry"
                 android:layout_toRightOf="@id/main_forgotEmail"
-                android:hint="Login"
+                android:hint="email"
                 android:visibility="invisible"/>
 
             <Button
