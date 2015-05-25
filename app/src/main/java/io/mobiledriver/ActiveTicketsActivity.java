@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -154,10 +155,10 @@ public class ActiveTicketsActivity extends ActionBarActivity {
                     adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, array_spinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     s.setAdapter(adapter);
-                    EditText licensePlate = (EditText)findViewById(R.id.activeTickets_licenceplate);
-                    EditText startDate = (EditText)findViewById(R.id.activeTickets_startdate);
-                    EditText endDate = (EditText)findViewById(R.id.activeTickets_enddate);
-                    EditText area = (EditText)findViewById(R.id.activeTickets_area);
+                    TextView licensePlate = (TextView)findViewById(R.id.activeTickets_licenceplate);
+                    TextView startDate = (TextView)findViewById(R.id.activeTickets_startdate);
+                    TextView endDate = (TextView)findViewById(R.id.activeTickets_enddate);
+                    TextView area = (TextView)findViewById(R.id.activeTickets_area);
                     s.setOnItemSelectedListener(new SpinnerListener(array, licensePlate, startDate, endDate, area));
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,13 +15,13 @@ import org.json.JSONException;
 public class SpinnerListener implements AdapterView.OnItemSelectedListener {
 
     private JSONArray array;
-    private EditText licensePlate;
-    private EditText startDate;
-    private EditText endDate;
-    private EditText area;
+    private TextView licensePlate;
+    private TextView startDate;
+    private TextView endDate;
+    private TextView area;
 
-    public SpinnerListener(JSONArray array, EditText licensePlate, EditText startDate,
-                           EditText endDate, EditText area)
+    public SpinnerListener(JSONArray array, TextView licensePlate, TextView startDate,
+                           TextView endDate, TextView area)
     {
         this.array = array;
         this.licensePlate = licensePlate;
@@ -36,8 +37,8 @@ public class SpinnerListener implements AdapterView.OnItemSelectedListener {
         try {
             Log.i("Value of selected: ", this.array.getString(position));
             this.licensePlate.setText(this.array.getJSONObject(position).getString("registrationNumber"));
-            this.startDate.setText(this.array.getJSONObject(position).getString("startDate"));
-            this.endDate.setText(this.array.getJSONObject(position).getString("endDate"));
+            this.startDate.setText(this.array.getJSONObject(position).getString("startDate").substring(0,16).replace("T", " "));
+            this.endDate.setText(this.array.getJSONObject(position).getString("endDate").substring(0,16).replace("T", " "));
             this.area.setText(this.array.getJSONObject(position).getString("areaId"));
 
         } catch (JSONException e) {
