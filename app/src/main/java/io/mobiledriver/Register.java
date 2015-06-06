@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,11 +82,9 @@ public class Register extends ActionBarActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            Log.i("Registering", "debug");
             String userName = ((EditText)findViewById(R.id.register_firstName)).getText().toString();
             String password = ((EditText)findViewById(R.id.register_password)).getText().toString();
             String email = ((EditText)findViewById(R.id.register_email)).getText().toString();
-            Log.i("Values", userName + " " + password + " " + email);
             String string_url = params[0];
             try {
                 List<NameValuePair> qparams = new ArrayList<NameValuePair>();
@@ -96,7 +93,6 @@ public class Register extends ActionBarActivity {
                 qparams.add(new BasicNameValuePair("email", email));
                 URI uri = URIUtils.createURI("https", "thebilet.usetitan.com", -1,
                         "/web.ashx/register", URLEncodedUtils.format(qparams, "UTF-8"), null);
-                Log.i("Url to send: ", string_url);
                 //URL url = new URL(string_url);
                 HttpURLConnection con = (HttpURLConnection)uri.toURL().openConnection();
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -106,7 +102,6 @@ public class Register extends ActionBarActivity {
                 {
                     result += input;
                 }
-                Log.i("HTTPs result: ", result);
                 return result;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -122,10 +117,8 @@ public class Register extends ActionBarActivity {
 
         protected void onPostExecute(String result)
         {
-            Log.i("Post: ", result);
             if(result.startsWith("ERROR"))
             {
-                Log.i("Rejestrowanie:", "ERROR");
                 AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
                 builder.setTitle("Register error");
                 builder.setMessage("Blah blah");
@@ -139,7 +132,6 @@ public class Register extends ActionBarActivity {
             }
             else
             {
-                Log.i("Register:", "OK");
                 startActivity(new Intent(Register.this, MainActivity.class));
                 finish();
             }

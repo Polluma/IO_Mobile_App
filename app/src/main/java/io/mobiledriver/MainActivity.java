@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,17 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.apache.http.HttpConnection;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,10 +44,8 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences prefs = this.getSharedPreferences("com.sharedPreferences", Context.MODE_PRIVATE);
         String key = "Token";
         String l = prefs.getString(key, "0");
-        Log.i("Preference: ", l);
         if(l != "0")
         {
-            Log.i("Logging: ", "Loging required");
             //TODO
             /*
                 Add async task to login
@@ -64,7 +54,6 @@ public class MainActivity extends ActionBarActivity {
         }
         else
         {
-            Log.i("Logging: ", "Logging not required, remebered values");
             Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
             finish();
@@ -137,34 +126,23 @@ public class MainActivity extends ActionBarActivity {
 
     public void sendEmail(View view)
     {
-        EditText forgotLoginEntry = (EditText)findViewById(R.id.main_forgotLoginEntry);
-        EditText forgotEmailEntry = (EditText)findViewById(R.id.main_forgotEmailEntry);
-        String login = forgotLoginEntry.getText().toString();
-        String email = forgotEmailEntry.getText().toString();
-        Log.i("Credentials: ", login + " " + email);
+        new sendEmailTask().execute("https://thebilet.usetitan.com/web.ashx/resetPassword");
     }
 
-    private class loginTask extends AsyncTask<String, Void, String>
+    private class sendEmailTask extends AsyncTask<String, Void, String>
     {
 
         @Override
         protected String doInBackground(String... params) {
-            EditText eLogin = (EditText)findViewById(R.id.login);
-            EditText ePassword = (EditText)findViewById(R.id.password);
-            Log.i("Testowanie logowania", eLogin.getText().toString() + " " +ePassword.getText().toString());
-
-            TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-            Log.i("Device ID: ", tm.getDeviceId());
-
-
             String string_url = params[0];
+            String login = ((EditText)findViewById(R.id.main_forgotLoginEntry)).getText().toString();
+            String email = ((EditText)findViewById(R.id.main_forgotEmailEntry)).getText().toString();
             try {
                 List<NameValuePair> qparams = new ArrayList<NameValuePair>();
-                qparams.add(new BasicNameValuePair("userName", eLogin.getText().toString()));
-                qparams.add(new BasicNameValuePair("password", ePassword.getText().toString()));
+                qparams.add(new BasicNameValuePair("username", login));
+                qparams.add(new BasicNameValuePair("email", email));
                 URI uri = URIUtils.createURI("https", "thebilet.usetitan.com", -1,
-                        "/web.ashx/login", URLEncodedUtils.format(qparams, "UTF-8"), null);
-                Log.i("Url to send: ", string_url);
+                        "/web.ashx/resetPassword", URLEncodedUtils.format(qparams, "UTF-8"), null);
                 URL url = uri.toURL();
                 HttpURLConnection con = (HttpURLConnection)url.openConnection();
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -174,7 +152,76 @@ public class MainActivity extends ActionBarActivity {
                 {
                     result += input;
                 }
-                Log.i("HTTPs result: ", result);
+                return result;
+            } catch (MalformedURLException e) {
+                return "ERROR";
+            } catch (IOException e) {
+                return "ERROR";
+            } catch (URISyntaxException e) {
+                return "ERROR";
+            }
+        }
+
+        protected void onPostExecute(String result)
+        {
+            if(result.startsWith("ERROR"))
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Error");
+                builder.setMessage("Wrong credentials");
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+
+                    };
+                });
+                builder.show();
+            }
+            else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Succes");
+                builder.setMessage("Email send");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+
+                    };
+                });
+                builder.show();
+            }
+
+        }
+    }
+
+    private class loginTask extends AsyncTask<String, Void, String>
+    {
+
+        @Override
+        protected String doInBackground(String... params) {
+            EditText eLogin = (EditText)findViewById(R.id.login);
+            EditText ePassword = (EditText)findViewById(R.id.password);
+
+            TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+
+
+            String string_url = params[0];
+            try {
+                List<NameValuePair> qparams = new ArrayList<NameValuePair>();
+                qparams.add(new BasicNameValuePair("userName", eLogin.getText().toString()));
+                qparams.add(new BasicNameValuePair("password", ePassword.getText().toString()));
+                qparams.add(new BasicNameValuePair("deviceId", tm.getDeviceId()));
+                URI uri = URIUtils.createURI("https", "thebilet.usetitan.com", -1,
+                        "/web.ashx/login", URLEncodedUtils.format(qparams, "UTF-8"), null);
+                URL url = uri.toURL();
+                HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String input;
+                String result = "";
+                while((input = br.readLine()) != null)
+                {
+                    result += input;
+                }
                 return result;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -189,10 +236,8 @@ public class MainActivity extends ActionBarActivity {
 
         protected void onPostExecute(String result)
         {
-            Log.i("Post: ", result);
             if(result.startsWith("ERROR"))
             {
-                Log.i("Logowanie:", "ERROR");
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Login error");
                 builder.setMessage("Bad credentials");
@@ -206,7 +251,6 @@ public class MainActivity extends ActionBarActivity {
             }
             else
             {
-                Log.i("Logowanie:", "OK");
                 SharedPreferences sharedPref = getSharedPreferences("com.sharedPreferences", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit = sharedPref.edit();
                 edit.clear();
@@ -215,9 +259,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(new Intent(MainActivity.this, MainMenuActivity.class));
                 finish();
             }
-
         }
-
     }
 
 }

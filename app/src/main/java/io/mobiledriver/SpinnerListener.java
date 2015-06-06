@@ -1,6 +1,5 @@
 package io.mobiledriver;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -33,9 +32,7 @@ public class SpinnerListener implements AdapterView.OnItemSelectedListener {
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.i("Selected: ", String.valueOf(position));
         try {
-            Log.i("Value of selected: ", this.array.getString(position));
             this.licensePlate.setText(this.array.getJSONObject(position).getString("registrationNumber"));
             this.startDate.setText(this.array.getJSONObject(position).getString("startDate").substring(0,16).replace("T", " "));
             this.endDate.setText(this.array.getJSONObject(position).getString("endDate").substring(0,16).replace("T", " "));

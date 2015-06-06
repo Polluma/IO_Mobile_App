@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,7 +93,6 @@ public class ActiveTicketsActivity extends ActionBarActivity {
     {
         Spinner dropbox = (Spinner)findViewById(R.id.spinner);
         String current = String.valueOf(dropbox.getBaseline());
-        Log.i("Chosen: ", current);
     }*/
 
     private class activeTicketsTask extends AsyncTask<String, Void, String>
@@ -120,7 +118,6 @@ public class ActiveTicketsActivity extends ActionBarActivity {
                 {
                     result += input;
                 }
-                Log.i("HTTPs result: ", result);
                 return result;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -137,11 +134,9 @@ public class ActiveTicketsActivity extends ActionBarActivity {
         {
             if(result.startsWith("ERROR"))
             {
-                Log.i("ERROR: ", result);
             }
             else
             {
-                Log.i("SUCCES: ", result);
                 try {
                     JSONArray array = new JSONArray(result);
                     array_spinner = new String[array.length()];

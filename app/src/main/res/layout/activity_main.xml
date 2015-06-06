@@ -97,6 +97,7 @@
                 android:layout_below="@id/buttonLayout"
                 android:layout_centerHorizontal="true"
                 android:text="Forgot password?"
+                android:textColor="#000000"
                 android:background="@android:color/transparent"
                 style="?android:attr/borderlessButtonStyle"
                 android:onClick="forgotPassword"/>
